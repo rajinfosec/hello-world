@@ -1,0 +1,18 @@
+# Below string to get AD User properites including SID, UID refer to login or emp etc, Server name full dn
+Get-ADUser UID -server "Name"
+
+# Below string to get AD User properites including SID, UID refer to login or emp using like filter
+Get-ADUser -Filter 'Name -like "UID" ' -server "Name"
+
+Script to pull above info in bulk 
+PS C:\Users\XXXX> $users = ForEach ($user in $(Get-Content C:\Users\XXXX\Desktop\list.csv)) {
+
+    Get-AdUser $user -Properties DisplayName, EmailAddress, Title, Name,SamAccountName  -server "NAMEXXX"
+        
+}
+    
+ $users |
+ Select-Object DisplayName, EmailAddress, Title,Name,SamAccountName |
+ Export-CSV -Path C:\Users\XXXXX\Desktop\output.csv -NoTypeInformation
+ 
+ 
